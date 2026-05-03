@@ -231,8 +231,21 @@
 
 <header>
   <h1>🌲 樹楽会 活動実施報告</h1>
-  <p>保険報告書データ入力アプリ</p>
+  <p>保険報告書データ入力</p>
 </header>
+
+<!-- 読み込み中 -->
+<div id="sec-loading" class="section" style="text-align:center; padding:40px;">
+  <div style="font-size:2rem; margin-bottom:12px;">⏳</div>
+  <div style="color:var(--muted);">データを読み込んでいます...</div>
+</div>
+
+<!-- エラー -->
+<div id="sec-error" class="section hidden" style="text-align:center; padding:32px;">
+  <div style="font-size:2rem; margin-bottom:12px;">❌</div>
+  <div style="color:var(--red); font-weight:700; margin-bottom:8px;">リンクが正しくありません</div>
+  <div style="color:var(--muted); font-size:0.85rem;">後呂さんから送られたリンクを開いてください。</div>
+</div>
 
 <!-- STEP 1: CSVアップロード -->
 <div class="section">
@@ -262,14 +275,14 @@
 
 <!-- STEP 3: 実施場所 -->
 <div class="section hidden" id="sec-loc">
-  <div class="sec-title">3　実施場所を確認・修正</div>
+  <div class="sec-title">1　実施場所を確認・修正</div>
   <div class="field-label">場所名</div>
   <input type="text" class="field-input" id="location" placeholder="例：天田">
 </div>
 
 <!-- STEP 4: 参加者 -->
 <div class="section hidden" id="sec-members">
-  <div class="sec-title">4　参加者と保険種別を選択</div>
+  <div class="sec-title">2　参加者と保険種別を選択</div>
   <div class="legend">
     <div class="legend-item"><div class="dot dot-1"></div><span style="color:var(--kind1);font-weight:700">第１種</span>：動力<b>不使用</b></div>
     <div class="legend-item"><div class="dot dot-2"></div><span style="color:var(--kind2);font-weight:700">第２種</span>：動力<b>使用</b></div>
@@ -283,7 +296,7 @@
 
 <!-- STEP 5: 確認・送信 -->
 <div class="section hidden" id="sec-summary">
-  <div class="sec-title">5　集計・確認</div>
+  <div class="sec-title">3　集計・確認</div>
 
   <div class="summary-grid">
     <div class="sum-card k1">
@@ -370,136 +383,6 @@ zone.addEventListener('drop', e => {
   }
 });
 
-function parseCsv(text, filename) {
-  // 調整さんCSVは常にShift-JIS → まずUTF-8で試し、文字化けしたらSJISで再読み込み
-  const msgEl = document.getElementById('csvMsg');
-  msgEl.innerHTML = '';
-  const hasMojibake = text.includes('\uFFFD') || /[\x80-\x9F]/.test(text);
-  if (hasMojibake) {
-    const file = document.getElementById('csvFile').files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = ev => parseCsvText(ev.target.result, filename);
-      reader.readAsText(file, 'Shift-JIS');
-      return;
-    }
-  }
-  parseCsvText(text, filename);
-}
-
-function parseCsvText(text, filename) {
-  const msgEl = document.getElementById('csvMsg');
-
-  // CRLF/LF統一してから処理
-  const rawLines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
-
-  // 調整さんCSVの実際の形式:
-  //   行0: タイトル
-  //   行1〜N: 日程リスト（複数行の引用符付きセル、無視してよい）
-  //   ヘッダー行: 「日程」で始まる行 → メンバー名が並ぶ
-  //   データ行: 日付ラベル,◯,△,× ...
-
-  // ヘッダー行を探す（最初のセルが「日程」の行）
-  let headerRowIdx = -1;
-  const allRows = [];
-  let inQuote = false;
-  let mergedLine = '';
-  for (const line of rawLines) {
-    if (inQuote) {
-      if (line.includes('"')) { inQuote = false; }
-      continue; // 引用符内の複数行は無視
-    }
-    if (line.startsWith('"') && !line.endsWith('"')) {
-      inQuote = true; continue;
-    }
-    const cols = line.split(',').map(c => c.replace(/^"|"$/g, '').trim());
-    allRows.push(cols);
-  }
-
-  for (let i = 0; i < allRows.length; i++) {
-    if (allRows[i][0] === '日程') { headerRowIdx = i; break; }
-  }
-
-  if (headerRowIdx === -1) {
-    msgEl.innerHTML = '<div class="msg msg-error">CSVの形式が認識できませんでした。<br>「日程」ヘッダー行が見つかりません。</div>';
-    return;
-  }
-
-  // メンバー名（ヘッダー行の2列目以降）
-  const memberNames = allRows[headerRowIdx].slice(1).filter(n => n);
-
-  // 日程データ行（ヘッダーの次から、コメント行を除く）
-  const dates = [];
-  for (let i = headerRowIdx + 1; i < allRows.length; i++) {
-    const row = allRows[i];
-    const label = row[0];
-    if (!label || label === 'コメント') continue;
-    // 日付っぽい文字列かチェック（数字/数字 パターン）
-    if (!/\d+\/\d+/.test(label)) continue;
-
-    const members = [];
-    memberNames.forEach((name, j) => {
-      const status = (row[j + 1] || '').replace(/\s/g, '');
-      // ◯（全角丸）と○（白丸）と△を対象
-      if (status === '◯' || status === '○' || status === '〇' || status === '△') {
-        members.push({ name, status: (status === '◯' || status === '○' || status === '〇') ? '○' : '△' });
-      }
-    });
-    dates.push({ label, members });
-  }
-
-  if (dates.length === 0) {
-    msgEl.innerHTML = '<div class="msg msg-error">日程データが見つかりませんでした。</div>';
-    return;
-  }
-
-  const title = allRows[0][0] || '';
-  scheduleData = { title, dates };
-
-  const ok = document.getElementById('uploadOk');
-  ok.textContent = `✓ ${filename}  読み込み完了（${dates.length}件の日程）`;
-  ok.classList.remove('hidden');
-
-  buildDateList();
-  msgEl.innerHTML = `<div class="msg msg-ok">✓ ${title} を読み込みました。日程を選択してください。</div>`;
-}
-
-
-// ── STEP 2: 日程選択 ──────────────────────────────────────
-function buildDateList() {
-  const el = document.getElementById('dateList');
-  el.innerHTML = '';
-  scheduleData.dates.forEach((d, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'date-btn';
-    const cnt = d.members.length;
-    btn.innerHTML = `${d.label} <span style="color:var(--muted);font-size:0.78rem;margin-left:6px;">○△${cnt}名</span>`;
-    btn.onclick = () => selectDate(i);
-    el.appendChild(btn);
-  });
-  document.getElementById('sec-date').classList.remove('hidden');
-}
-
-function selectDate(i) {
-  selectedDate = scheduleData.dates[i];
-  document.querySelectorAll('.date-btn').forEach((b, j) => b.classList.toggle('selected', j === i));
-
-  // 場所を自動抽出（「〜」または「～」以降）
-  const label = selectedDate.label;
-  const locMatch = label.match(/[〜～]\s*(.+)/);
-  document.getElementById('location').value = locMatch ? locMatch[1].trim() : '';
-
-  // 参加予定者（○・△のみ）
-  members = selectedDate.members.map(m => ({ name: m.name, status: m.status, checked: false, kind: 1 }));
-
-  renderMembers();
-  document.getElementById('sec-loc').classList.remove('hidden');
-  document.getElementById('sec-members').classList.remove('hidden');
-  document.getElementById('sec-summary').classList.remove('hidden');
-  updateSummary();
-
-  document.getElementById('sec-loc').scrollIntoView({ behavior: 'smooth' });
-}
 
 // ── STEP 4: 参加者 ────────────────────────────────────────
 function renderMembers() {
