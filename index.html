@@ -29,8 +29,8 @@
     position: sticky; top: 0; z-index: 100;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
-  header h1 { font-size: 1.05rem; font-weight: 700; }
-  header p  { font-size: 0.75rem; opacity: 0.85; margin-top: 2px; }
+  header h1 { font-size: 1.2rem; font-weight: 700; }
+  header p  { font-size: 0.95rem; opacity: 0.85; margin-top: 2px; }
 
   .section {
     background: var(--surface); border-radius: 12px;
@@ -39,7 +39,7 @@
   }
 
   .sec-title {
-    font-size: 0.72rem; font-weight: 700;
+    font-size: 0.9rem; font-weight: 700;
     letter-spacing: 0.12em; color: var(--accent);
     text-transform: uppercase; margin-bottom: 14px;
     display: flex; align-items: center; gap: 8px;
@@ -90,11 +90,11 @@
   }
 
   /* Fields */
-  .field-label { font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
+  .field-label { font-size: 1rem; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
   .field-input {
     background: var(--bg); border: 1.5px solid var(--border);
     border-radius: 8px; color: var(--text);
-    font-family: inherit; font-size: 0.95rem;
+    font-family: inherit; font-size: 1.1rem;
     padding: 11px 13px; outline: none; width: 100%;
     transition: border-color 0.15s;
   }
@@ -102,7 +102,7 @@
 
   /* Members */
   .legend {
-    display: flex; gap: 16px; margin-bottom: 12px; font-size: 0.78rem;
+    display: flex; gap: 16px; margin-bottom: 12px; font-size: 1rem;
   }
   .legend-item { display: flex; align-items: center; gap: 5px; }
   .dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -128,10 +128,10 @@
 
   .person-name {
     flex: 1; padding: 14px 12px;
-    font-size: 0.95rem; font-weight: 500; cursor: pointer;
+    font-size: 1.1rem; font-weight: 500; cursor: pointer;
   }
   .person-status {
-    font-size: 0.72rem; padding: 2px 6px; border-radius: 4px;
+    font-size: 0.88rem; padding: 2px 6px; border-radius: 4px;
     margin-left: 4px; font-weight: 700; display: inline-block;
   }
   .st-maru     { background: #dcfce7; color: #16a34a; }
@@ -144,7 +144,7 @@
   .kind-btn {
     border: 2px solid var(--border); border-radius: 6px;
     cursor: pointer; font-family: inherit;
-    font-size: 0.72rem; font-weight: 700;
+    font-size: 0.9rem; font-weight: 700;
     padding: 6px 10px; background: #fff; color: var(--muted);
     transition: all 0.15s;
   }
@@ -170,31 +170,31 @@
   .sum-card { border-radius: 10px; padding: 14px; text-align: center; }
   .sum-card.k1 { background: #eff6ff; border: 2px solid #bfdbfe; }
   .sum-card.k2 { background: #fff7ed; border: 2px solid #fed7aa; }
-  .sum-label { font-size: 0.72rem; font-weight: 700; margin-bottom: 4px; }
+  .sum-label { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
   .sum-card.k1 .sum-label { color: var(--kind1); }
   .sum-card.k2 .sum-label { color: var(--kind2); }
-  .sum-num { font-size: 2rem; font-weight: 700; line-height: 1; }
+  .sum-num { font-size: 2.4rem; font-weight: 700; line-height: 1; }
   .sum-card.k1 .sum-num { color: var(--kind1); }
   .sum-card.k2 .sum-num { color: var(--kind2); }
-  .sum-unit { font-size: 0.75rem; color: var(--muted); }
+  .sum-unit { font-size: 0.95rem; color: var(--muted); }
 
   .ins-box { background: #f8fafc; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px; }
-  .ins-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 0.85rem; }
+  .ins-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; font-size: 1rem; }
   .ins-row + .ins-row { border-top: 1px solid var(--border); }
   .ins-label { color: var(--muted); }
-  .ins-val { font-weight: 700; font-family: monospace; font-size: 0.95rem; }
+  .ins-val { font-weight: 700; font-family: monospace; font-size: 1.1rem; }
   .ins-total-label { color: var(--accent); font-weight: 700; }
-  .ins-total-val { color: var(--accent); font-size: 1.05rem; font-weight: 700; }
+  .ins-total-val { color: var(--accent); font-size: 1.2rem; font-weight: 700; }
 
   .ptags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-  .ptag { border-radius: 6px; font-size: 0.78rem; font-weight: 700; padding: 4px 10px; }
+  .ptag { border-radius: 6px; font-size: 0.95rem; font-weight: 700; padding: 6px 12px; }
   .ptag.k1 { background: #eff6ff; color: var(--kind1); border: 1px solid #bfdbfe; }
   .ptag.k2 { background: #fff7ed; color: var(--kind2); border: 1px solid #fed7aa; }
 
   .btn-submit {
     background: var(--green); border: none; border-radius: 12px;
     color: #fff; cursor: pointer; font-family: inherit;
-    font-size: 1rem; font-weight: 700; padding: 18px; width: 100%;
+    font-size: 1.15rem; font-weight: 700; padding: 20px; width: 100%;
     margin-top: 16px; letter-spacing: 0.05em;
     box-shadow: 0 4px 12px rgba(22,163,74,0.3);
     transition: opacity 0.15s, transform 0.1s;
@@ -209,17 +209,17 @@
   .result-box h2 { color: var(--green); font-size: 1.1rem; margin-bottom: 12px; }
   .result-data {
     background: #fff; border-radius: 8px; padding: 14px;
-    text-align: left; font-size: 0.82rem; line-height: 2;
+    text-align: left; font-size: 1rem; line-height: 2;
     font-family: monospace; white-space: pre-wrap; margin-bottom: 14px;
     border: 1px solid var(--border);
   }
   .btn-copy {
     background: var(--accent); border: none; border-radius: 8px;
     color: #fff; cursor: pointer; font-family: inherit;
-    font-size: 0.9rem; font-weight: 700; padding: 13px 20px; width: 100%;
+    font-size: 1rem; font-weight: 700; padding: 15px 20px; width: 100%;
   }
 
-  .msg { border-radius: 8px; font-size: 0.82rem; margin-top: 10px; padding: 10px 12px; }
+  .msg { border-radius: 8px; font-size: 1rem; margin-top: 10px; padding: 12px 14px; }
   .msg-error { background: #fef2f2; border: 1px solid #fecaca; color: var(--red); }
   .msg-info  { background: #eff6ff; border: 1px solid #bfdbfe; color: var(--accent); }
   .msg-ok    { background: #f0fdf4; border: 1px solid #86efac; color: var(--green); }
@@ -313,7 +313,7 @@
 
   <div class="ins-box">
     <div class="ins-row">
-      <span class="ins-label">①傷害部分　第１種×53＋第２種×383</span>
+      <span class="ins-label">①傷害部分　第１種×53＋第２種×462</span>
       <span class="ins-val" id="ins1">0 円</span>
     </div>
     <div class="ins-row">
@@ -449,7 +449,7 @@ function updateSummary() {
   document.getElementById('count1').textContent = c1;
   document.getElementById('count2').textContent = c2;
 
-  const ins1 = c1 * 53 + c2 * 383;
+  const ins1 = c1 * 53 + c2 * 462;
   const ins2 = Math.max(30 * (c1 + c2), 1500);
   const ins3 = ins1 + ins2;
 
@@ -472,7 +472,7 @@ function showResult() {
 
   const c1 = checked.filter(m => m.kind === 1).length;
   const c2 = checked.filter(m => m.kind === 2).length;
-  const ins1 = c1 * 53 + c2 * 383;
+  const ins1 = c1 * 53 + c2 * 462;
   const ins2 = Math.max(30 * (c1 + c2), 1500);
   const ins3 = ins1 + ins2;
 
