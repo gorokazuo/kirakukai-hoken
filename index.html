@@ -6,225 +6,79 @@
 <title>樹楽会 活動報告</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
-
   :root {
-    --bg: #f0f4f8; --surface: #ffffff;
-    --accent: #2563eb; --accent2: #1d4ed8;
-    --green: #16a34a; --red: #dc2626;
-    --text: #1e293b; --muted: #64748b; --border: #e2e8f0;
-    --kind1: #2563eb; --kind2: #ea580c;
+    --bg:#f0f4f8; --surface:#ffffff; --accent:#2563eb; --accent2:#1d4ed8;
+    --green:#16a34a; --red:#dc2626; --text:#1e293b; --muted:#64748b;
+    --border:#e2e8f0; --kind1:#2563eb; --kind2:#ea580c;
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    font-family: 'Noto Sans JP', sans-serif;
-    background: var(--bg); color: var(--text);
-    min-height: 100vh; padding-bottom: 48px;
-  }
-
-  header {
-    background: var(--accent); color: #fff;
-    padding: 16px 20px 14px;
-    position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  }
-  header h1 { font-size: 1.2rem; font-weight: 700; }
-  header p  { font-size: 0.95rem; opacity: 0.85; margin-top: 2px; }
-
-  .section {
-    background: var(--surface); border-radius: 12px;
-    margin: 14px 12px 0; padding: 18px 16px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-  }
-
-  .sec-title {
-    font-size: 0.9rem; font-weight: 700;
-    letter-spacing: 0.12em; color: var(--accent);
-    text-transform: uppercase; margin-bottom: 14px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .sec-title::before {
-    content: ''; display: block;
-    width: 4px; height: 13px;
-    background: var(--accent); border-radius: 2px;
-  }
-
-  /* CSV Upload */
-  .upload-zone {
-    border: 2px dashed var(--border); border-radius: 10px;
-    padding: 28px 16px; text-align: center; cursor: pointer;
-    position: relative; transition: all 0.2s;
-  }
-  .upload-zone:hover, .upload-zone.dragover {
-    border-color: var(--accent); background: #eff6ff;
-  }
-  .upload-zone input[type=file] {
-    position: absolute; inset: 0; opacity: 0;
-    cursor: pointer; width: 100%; height: 100%;
-  }
-  .upload-icon { font-size: 2rem; margin-bottom: 8px; }
-  .upload-zone p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
-  .upload-ok { color: var(--green); font-weight: 700; font-size: 0.9rem; margin-top: 6px; }
-
-  .how-to {
-    background: #eff6ff; border: 1px solid #bfdbfe;
-    border-radius: 8px; padding: 12px 14px;
-    font-size: 0.78rem; color: var(--accent);
-    line-height: 1.7; margin-top: 10px;
-  }
-  .how-to b { color: var(--accent2); }
-
-  /* Date list */
-  .date-list { display: grid; gap: 8px; }
-  .date-btn {
-    background: var(--bg); border: 2px solid var(--border);
-    border-radius: 10px; color: var(--text); cursor: pointer;
-    font-family: inherit; font-size: 0.88rem; font-weight: 500;
-    padding: 13px 14px; text-align: left; width: 100%;
-    transition: all 0.15s;
-  }
-  .date-btn.selected {
-    border-color: var(--accent); background: #eff6ff;
-    color: var(--accent); font-weight: 700;
-  }
-
-  /* Fields */
-  .field-label { font-size: 1rem; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
-  .field-input {
-    background: var(--bg); border: 1.5px solid var(--border);
-    border-radius: 8px; color: var(--text);
-    font-family: inherit; font-size: 1.1rem;
-    padding: 11px 13px; outline: none; width: 100%;
-    transition: border-color 0.15s;
-  }
-  .field-input:focus { border-color: var(--accent); }
-
-  /* Members */
-  .legend {
-    display: flex; gap: 16px; margin-bottom: 12px; font-size: 1rem;
-  }
-  .legend-item { display: flex; align-items: center; gap: 5px; }
-  .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .dot-1 { background: var(--kind1); }
-  .dot-2 { background: var(--kind2); }
-
-  .person-row {
-    display: flex; align-items: center;
-    border: 1.5px solid var(--border); border-radius: 10px;
-    margin-bottom: 8px; overflow: hidden; transition: border-color 0.15s;
-  }
-  .person-row.checked { border-color: var(--accent); }
-
-  .person-check {
-    display: flex; align-items: center; justify-content: center;
-    width: 48px; flex-shrink: 0; padding: 14px 0;
-    cursor: pointer; background: var(--bg);
-    border-right: 1px solid var(--border);
-  }
-  .person-check input[type=checkbox] {
-    width: 22px; height: 22px; cursor: pointer; accent-color: var(--accent);
-  }
-
-  .person-name {
-    flex: 1; padding: 14px 12px;
-    font-size: 1.1rem; font-weight: 500; cursor: pointer;
-  }
-  .person-status {
-    font-size: 0.88rem; padding: 2px 6px; border-radius: 4px;
-    margin-left: 4px; font-weight: 700; display: inline-block;
-  }
-  .st-maru     { background: #dcfce7; color: #16a34a; }
-  .st-sankaku  { background: #fef9c3; color: #a16207; }
-
-  .person-kind {
-    display: flex; gap: 6px; padding: 8px 10px;
-    border-left: 1px solid var(--border); flex-shrink: 0;
-  }
-  .kind-btn {
-    border: 2px solid var(--border); border-radius: 6px;
-    cursor: pointer; font-family: inherit;
-    font-size: 0.9rem; font-weight: 700;
-    padding: 6px 10px; background: #fff; color: var(--muted);
-    transition: all 0.15s;
-  }
-  .kind-btn.k1.active { border-color: var(--kind1); background: #eff6ff; color: var(--kind1); }
-  .kind-btn.k2.active { border-color: var(--kind2); background: #fff7ed; color: var(--kind2); }
-
-  .add-person-row { display: flex; gap: 8px; margin-top: 10px; }
-  .add-person-row input {
-    flex: 1; background: var(--bg);
-    border: 1.5px solid var(--border); border-radius: 8px;
-    color: var(--text); font-family: inherit;
-    font-size: 0.9rem; padding: 10px 12px; outline: none;
-  }
-  .add-person-row input:focus { border-color: var(--accent); }
-  .btn-add-p {
-    background: var(--bg); border: 2px solid var(--accent);
-    border-radius: 8px; color: var(--accent); cursor: pointer;
-    font-size: 1.3rem; padding: 0 14px;
-  }
-
-  /* Summary */
-  .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-  .sum-card { border-radius: 10px; padding: 14px; text-align: center; }
-  .sum-card.k1 { background: #eff6ff; border: 2px solid #bfdbfe; }
-  .sum-card.k2 { background: #fff7ed; border: 2px solid #fed7aa; }
-  .sum-label { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
-  .sum-card.k1 .sum-label { color: var(--kind1); }
-  .sum-card.k2 .sum-label { color: var(--kind2); }
-  .sum-num { font-size: 2.4rem; font-weight: 700; line-height: 1; }
-  .sum-card.k1 .sum-num { color: var(--kind1); }
-  .sum-card.k2 .sum-num { color: var(--kind2); }
-  .sum-unit { font-size: 0.95rem; color: var(--muted); }
-
-  .ins-box { background: #f8fafc; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px; }
-  .ins-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; font-size: 1rem; }
-  .ins-row + .ins-row { border-top: 1px solid var(--border); }
-  .ins-label { color: var(--muted); }
-  .ins-val { font-weight: 700; font-family: monospace; font-size: 1.1rem; }
-  .ins-total-label { color: var(--accent); font-weight: 700; }
-  .ins-total-val { color: var(--accent); font-size: 1.2rem; font-weight: 700; }
-
-  .ptags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-  .ptag { border-radius: 6px; font-size: 0.95rem; font-weight: 700; padding: 6px 12px; }
-  .ptag.k1 { background: #eff6ff; color: var(--kind1); border: 1px solid #bfdbfe; }
-  .ptag.k2 { background: #fff7ed; color: var(--kind2); border: 1px solid #fed7aa; }
-
-  .btn-submit {
-    background: var(--green); border: none; border-radius: 12px;
-    color: #fff; cursor: pointer; font-family: inherit;
-    font-size: 1.15rem; font-weight: 700; padding: 20px; width: 100%;
-    margin-top: 16px; letter-spacing: 0.05em;
-    box-shadow: 0 4px 12px rgba(22,163,74,0.3);
-    transition: opacity 0.15s, transform 0.1s;
-  }
-  .btn-submit:active { opacity: 0.9; transform: scale(0.98); }
-
-  /* Result */
-  .result-box {
-    background: #f0fdf4; border: 2px solid #86efac;
-    border-radius: 12px; padding: 20px; text-align: center;
-  }
-  .result-box h2 { color: var(--green); font-size: 1.1rem; margin-bottom: 12px; }
-  .result-data {
-    background: #fff; border-radius: 8px; padding: 14px;
-    text-align: left; font-size: 1rem; line-height: 2;
-    font-family: monospace; white-space: pre-wrap; margin-bottom: 14px;
-    border: 1px solid var(--border);
-  }
-  .btn-copy {
-    background: var(--accent); border: none; border-radius: 8px;
-    color: #fff; cursor: pointer; font-family: inherit;
-    font-size: 1rem; font-weight: 700; padding: 15px 20px; width: 100%;
-  }
-
-  .msg { border-radius: 8px; font-size: 1rem; margin-top: 10px; padding: 12px 14px; }
-  .msg-error { background: #fef2f2; border: 1px solid #fecaca; color: var(--red); }
-  .msg-info  { background: #eff6ff; border: 1px solid #bfdbfe; color: var(--accent); }
-  .msg-ok    { background: #f0fdf4; border: 1px solid #86efac; color: var(--green); }
-
-  .hidden { display: none !important; }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:48px;font-size:18px;}
+  header{background:var(--accent);color:#fff;padding:16px 20px 14px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+  header h1{font-size:1.25rem;font-weight:700;}
+  header p{font-size:.95rem;opacity:.85;margin-top:2px;}
+  .section{background:var(--surface);border-radius:12px;margin:14px 12px 0;padding:18px 16px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+  .sec-title{font-size:.9rem;font-weight:700;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .sec-title::before{content:'';display:block;width:4px;height:13px;background:var(--accent);border-radius:2px;}
+  .field-label{font-size:1rem;color:var(--muted);margin-bottom:6px;font-weight:500;}
+  .field-input{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:1.1rem;padding:11px 13px;outline:none;width:100%;transition:border-color .15s;}
+  .field-input:focus{border-color:var(--accent);}
+  .legend{display:flex;gap:16px;margin-bottom:12px;font-size:1rem;}
+  .legend-item{display:flex;align-items:center;gap:5px;}
+  .dot{width:10px;height:10px;border-radius:50%;}
+  .dot-1{background:var(--kind1);}
+  .dot-2{background:var(--kind2);}
+  .person-row{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;transition:border-color .15s;}
+  .person-row.checked{border-color:var(--accent);}
+  .person-check{display:flex;align-items:center;justify-content:center;width:52px;flex-shrink:0;padding:14px 0;cursor:pointer;background:var(--bg);border-right:1px solid var(--border);}
+  .person-check input[type=checkbox]{width:24px;height:24px;cursor:pointer;accent-color:var(--accent);}
+  .person-name{flex:1;padding:14px 12px;font-size:1.1rem;font-weight:500;cursor:pointer;}
+  .person-status{font-size:.88rem;padding:2px 6px;border-radius:4px;margin-left:4px;font-weight:700;display:inline-block;}
+  .st-maru{background:#dcfce7;color:#16a34a;}
+  .st-sankaku{background:#fef9c3;color:#a16207;}
+  .person-kind{display:flex;gap:6px;padding:8px 10px;border-left:1px solid var(--border);flex-shrink:0;}
+  .kind-btn{border:2px solid var(--border);border-radius:6px;cursor:pointer;font-family:inherit;font-size:.88rem;font-weight:700;padding:8px 12px;background:#fff;color:var(--muted);transition:all .15s;}
+  .kind-btn.k1.active{border-color:var(--kind1);background:#eff6ff;color:var(--kind1);}
+  .kind-btn.k2.active{border-color:var(--kind2);background:#fff7ed;color:var(--kind2);}
+  .add-row{display:flex;gap:8px;margin-top:10px;}
+  .add-row input{flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:1.05rem;padding:12px 14px;outline:none;}
+  .add-row input:focus{border-color:var(--accent);}
+  .btn-add{background:var(--bg);border:2px solid var(--accent);border-radius:8px;color:var(--accent);cursor:pointer;font-size:1.4rem;padding:0 16px;}
+  .sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+  .sum-card{border-radius:10px;padding:14px;text-align:center;}
+  .sum-card.k1{background:#eff6ff;border:2px solid #bfdbfe;}
+  .sum-card.k2{background:#fff7ed;border:2px solid #fed7aa;}
+  .sum-label{font-size:.88rem;font-weight:700;margin-bottom:4px;}
+  .sum-card.k1 .sum-label{color:var(--kind1);}
+  .sum-card.k2 .sum-label{color:var(--kind2);}
+  .sum-num{font-size:2.4rem;font-weight:700;line-height:1;}
+  .sum-card.k1 .sum-num{color:var(--kind1);}
+  .sum-card.k2 .sum-num{color:var(--kind2);}
+  .sum-unit{font-size:.95rem;color:var(--muted);}
+  .ins-box{background:#f8fafc;border:1.5px solid var(--border);border-radius:10px;padding:14px;}
+  .ins-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:1rem;}
+  .ins-row+.ins-row{border-top:1px solid var(--border);}
+  .ins-label{color:var(--muted);}
+  .ins-val{font-weight:700;font-family:monospace;font-size:1.1rem;}
+  .ins-total-label{color:var(--accent);font-weight:700;}
+  .ins-total-val{color:var(--accent);font-size:1.2rem;font-weight:700;}
+  .ptags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+  .ptag{border-radius:6px;font-size:.95rem;font-weight:700;padding:6px 12px;}
+  .ptag.k1{background:#eff6ff;color:var(--kind1);border:1px solid #bfdbfe;}
+  .ptag.k2{background:#fff7ed;color:var(--kind2);border:1px solid #fed7aa;}
+  .btn-submit{background:var(--green);border:none;border-radius:12px;color:#fff;cursor:pointer;font-family:inherit;font-size:1.15rem;font-weight:700;padding:20px;width:100%;margin-top:16px;letter-spacing:.05em;box-shadow:0 4px 12px rgba(22,163,74,.3);transition:opacity .15s,transform .1s;}
+  .btn-submit:active{opacity:.9;transform:scale(.98);}
+  .result-box{background:#f0fdf4;border:2px solid #86efac;border-radius:12px;padding:20px;text-align:center;}
+  .result-box h2{color:var(--green);font-size:1.1rem;margin-bottom:12px;}
+  .result-data{background:#fff;border-radius:8px;padding:14px;text-align:left;font-size:1rem;line-height:2;font-family:monospace;white-space:pre-wrap;margin-bottom:14px;border:1px solid var(--border);}
+  .action-btns{display:grid;gap:10px;}
+  .btn-action{border:none;border-radius:10px;color:#fff;cursor:pointer;font-family:inherit;font-size:1rem;font-weight:700;padding:15px 20px;width:100%;transition:opacity .15s;}
+  .btn-action:hover{opacity:.9;}
+  .btn-blue{background:var(--accent);}
+  .btn-gray{background:#475569;}
+  .msg{border-radius:8px;font-size:1rem;margin-top:12px;padding:12px 14px;}
+  .msg-info{background:#eff6ff;border:1px solid #bfdbfe;color:var(--accent);}
+  .actdate-label{font-size:1.3rem;font-weight:700;color:var(--accent);padding:8px 0;}
+  .hidden{display:none!important;}
 </style>
 </head>
 <body>
@@ -234,71 +88,44 @@
   <p>保険報告書データ入力</p>
 </header>
 
-<!-- 読み込み中 -->
-<div id="sec-loading" class="section" style="text-align:center; padding:40px;">
-  <div style="font-size:2rem; margin-bottom:12px;">⏳</div>
+<div id="sec-loading" class="section" style="text-align:center;padding:40px;">
+  <div style="font-size:2rem;margin-bottom:12px;">⏳</div>
   <div style="color:var(--muted);">データを読み込んでいます...</div>
 </div>
 
-<!-- エラー -->
-<div id="sec-error" class="section hidden" style="text-align:center; padding:32px;">
-  <div style="font-size:2rem; margin-bottom:12px;">❌</div>
-  <div style="color:var(--red); font-weight:700; margin-bottom:8px;">リンクが正しくありません</div>
-  <div style="color:var(--muted); font-size:0.85rem;">後呂さんから送られたリンクを開いてください。</div>
+<div id="sec-error" class="section hidden" style="text-align:center;padding:32px;">
+  <div style="font-size:2rem;margin-bottom:12px;">❌</div>
+  <div style="color:var(--red);font-weight:700;margin-bottom:8px;">リンクが正しくありません</div>
+  <div style="color:var(--muted);font-size:.95rem;">後呂さんから送られたリンクを開いてください。</div>
 </div>
 
-<!-- STEP 1: CSVアップロード -->
-<div class="section">
-  <div class="sec-title">1　調整さんのCSVを読み込む</div>
-
-  <div class="how-to">
-    <b>事前準備（PC・スマホどちらでも）：</b><br>
-    ① 調整さんのページを開く<br>
-    ② ページ下部の「<b>出欠表をダウンロードする</b>」をタップ<br>
-    ③ 保存されたCSVファイルを下で選択する
-  </div>
-
-  <div class="upload-zone" id="uploadZone" style="margin-top:12px;">
-    <input type="file" id="csvFile" accept=".csv">
-    <div class="upload-icon">📄</div>
-    <p>タップしてCSVファイルを選択<br><small>（調整さんからダウンロードしたファイル）</small></p>
-    <div class="upload-ok hidden" id="uploadOk"></div>
-  </div>
-  <div id="csvMsg"></div>
+<div id="sec-actdate" class="section hidden">
+  <div class="sec-title">活動日</div>
+  <div class="actdate-label" id="actDateLabel"></div>
 </div>
 
-<!-- STEP 2: 活動日選択 -->
-<div class="section hidden" id="sec-date">
-  <div class="sec-title">2　活動日を選択</div>
-  <div class="date-list" id="dateList"></div>
-</div>
-
-<!-- STEP 3: 実施場所 -->
-<div class="section hidden" id="sec-loc">
+<div id="sec-loc" class="section hidden">
   <div class="sec-title">1　実施場所を確認・修正</div>
   <div class="field-label">場所名</div>
   <input type="text" class="field-input" id="location" placeholder="例：天田">
 </div>
 
-<!-- STEP 4: 参加者 -->
-<div class="section hidden" id="sec-members">
+<div id="sec-members" class="section hidden">
   <div class="sec-title">2　参加者と保険種別を選択</div>
   <div class="legend">
     <div class="legend-item"><div class="dot dot-1"></div><span style="color:var(--kind1);font-weight:700">第１種</span>：動力<b>不使用</b></div>
     <div class="legend-item"><div class="dot dot-2"></div><span style="color:var(--kind2);font-weight:700">第２種</span>：動力<b>使用</b></div>
   </div>
   <div id="memberList"></div>
-  <div class="add-person-row">
+  <div class="add-row">
     <input type="text" id="extraName" placeholder="予定外の参加者名を追加">
-    <button class="btn-add-p" onclick="addExtraPerson()">＋</button>
+    <button class="btn-add" onclick="addExtraPerson()">＋</button>
   </div>
 </div>
 
-<!-- STEP 5: 確認・送信 -->
-<div class="section hidden" id="sec-summary">
+<div id="sec-summary" class="section hidden">
   <div class="sec-title">3　集計・確認</div>
-
-  <div class="summary-grid">
+  <div class="sum-grid">
     <div class="sum-card k1">
       <div class="sum-label">第１種（動力不使用）</div>
       <div class="sum-num" id="count1">0</div>
@@ -310,14 +137,13 @@
       <div class="sum-unit">名</div>
     </div>
   </div>
-
   <div class="ins-box">
     <div class="ins-row">
       <span class="ins-label">①傷害部分　第１種×53＋第２種×462</span>
       <span class="ins-val" id="ins1">0 円</span>
     </div>
     <div class="ins-row">
-      <span class="ins-label">②賠償責任　30×(1種+2種)、1500未満→1500円</span>
+      <span class="ins-label">②賠償責任　30×合計人数、1500未満→1500円</span>
       <span class="ins-val" id="ins2">0 円</span>
     </div>
     <div class="ins-row">
@@ -325,66 +151,56 @@
       <span class="ins-total-val" id="ins3">0 円</span>
     </div>
   </div>
-
   <div style="margin-top:14px;">
     <div class="field-label">参加者</div>
     <div class="ptags" id="ptags"></div>
   </div>
-
   <button class="btn-submit" onclick="showResult()">📤 報告データを確定する</button>
 </div>
 
-<!-- RESULT -->
-<div class="section hidden" id="sec-result">
+<div id="sec-result" class="section hidden">
   <div class="result-box">
     <h2>✅ 報告データが確定しました</h2>
     <div class="result-data" id="resultData"></div>
-    <div style="display:grid; gap:10px; margin-bottom:4px;">
-      <button class="btn-copy" onclick="sendEmail()" style="background:#2563eb;">
-        ✉️ 担当者に送る
-      </button>
-      <button class="btn-copy" onclick="copyResult()" style="background:#475569;">
-        📋 内容をコピー
-      </button>
+    <div class="action-btns">
+      <button class="btn-action btn-blue" onclick="sendEmail()">✉️ 担当者に送る</button>
+      <button class="btn-action btn-gray" onclick="copyResult()">📋 内容をコピー</button>
     </div>
-    <div class="msg msg-info" style="text-align:left;">
-      「メールで送る」を押すとメールアプリが開き、宛先・件名・本文が自動入力されます。
+    <div class="msg msg-info" style="margin-top:10px;text-align:left;">
+      「担当者に送る」を押すとメールアプリが開き、宛先・件名・本文が自動入力されます。
     </div>
   </div>
 </div>
 
 <script>
-// ── State ─────────────────────────────────────────────────
-let scheduleData = null;  // {title, dates:[{label, members:[{name,status}]}]}
 let selectedDate = null;
-let members = [];         // [{name, status, checked, kind}]
+let members = [];
 
-// ── STEP 1: CSV読み込み ───────────────────────────────────
-document.getElementById('csvFile').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => parseCsv(ev.target.result, file.name);
-  // 調整さんのCSVはShift-JISの場合があるのでUTF-8とSJIS両方試す
-  reader.readAsText(file, 'Shift-JIS');
-});
-
-// ドラッグ&ドロップ
-const zone = document.getElementById('uploadZone');
-zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
-zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
-zone.addEventListener('drop', e => {
-  e.preventDefault(); zone.classList.remove('dragover');
-  const file = e.dataTransfer.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = ev => parseCsvText(ev.target.result, file.name);
-    reader.readAsText(file, 'Shift-JIS');
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const d = params.get('d');
+  if (!d) {
+    show('sec-error'); hide('sec-loading'); return;
+  }
+  try {
+    const payload = JSON.parse(decodeURIComponent(atob(d)));
+    selectedDate = payload;
+    members = payload.members.map(m => ({name:m.name, status:m.status, checked:false, kind:1}));
+    document.getElementById('actDateLabel').textContent = payload.label;
+    const loc = payload.label.match(/[〜～]\s*(.+)/);
+    document.getElementById('location').value = loc ? loc[1].trim() : '';
+    ['sec-actdate','sec-loc','sec-members','sec-summary'].forEach(id => show(id));
+    renderMembers();
+    updateSummary();
+    hide('sec-loading');
+  } catch(e) {
+    show('sec-error'); hide('sec-loading');
   }
 });
 
+function show(id){ document.getElementById(id).classList.remove('hidden'); }
+function hide(id){ document.getElementById(id).classList.add('hidden'); }
 
-// ── STEP 4: 参加者 ────────────────────────────────────────
 function renderMembers() {
   const el = document.getElementById('memberList');
   el.innerHTML = '';
@@ -392,17 +208,16 @@ function renderMembers() {
     const div = document.createElement('div');
     div.className = 'person-row' + (m.checked ? ' checked' : '');
     div.id = `pr-${i}`;
-    const stClass = (m.status === '○' || m.status === '〇') ? 'st-maru' : 'st-sankaku';
     div.innerHTML = `
       <label class="person-check">
-        <input type="checkbox" ${m.checked ? 'checked' : ''} onchange="toggleMember(${i}, this.checked)">
+        <input type="checkbox" ${m.checked?'checked':''} onchange="toggleMember(${i},this.checked)">
       </label>
-      <div class="person-name" onclick="toggleMember(${i}, !members[${i}].checked)">
-        ${m.name}<span class="person-status ${stClass}">${m.status}</span>
+      <div class="person-name" onclick="toggleMember(${i},!members[${i}].checked)">
+        ${m.name}<span class="person-status ${m.status==='○'?'st-maru':'st-sankaku'}">${m.status}</span>
       </div>
       <div class="person-kind">
-        <button class="kind-btn k1 ${m.checked && m.kind===1 ? 'active' : ''}" onclick="setKind(${i},1)">第１種</button>
-        <button class="kind-btn k2 ${m.checked && m.kind===2 ? 'active' : ''}" onclick="setKind(${i},2)">第２種</button>
+        <button class="kind-btn k1 ${m.checked&&m.kind===1?'active':''}" onclick="setKind(${i},1)">第１種</button>
+        <button class="kind-btn k2 ${m.checked&&m.kind===2?'active':''}" onclick="setKind(${i},2)">第２種</button>
       </div>`;
     el.appendChild(div);
   });
@@ -414,115 +229,96 @@ function toggleMember(i, checked) {
   if (!row) return;
   row.classList.toggle('checked', checked);
   row.querySelector('input[type=checkbox]').checked = checked;
-  row.querySelectorAll('.kind-btn').forEach(b => {
-    b.classList.toggle('active', checked && b.classList.contains('k' + members[i].kind));
-  });
+  row.querySelectorAll('.kind-btn').forEach(b =>
+    b.classList.toggle('active', checked && b.classList.contains('k'+members[i].kind)));
   updateSummary();
 }
 
 function setKind(i, kind) {
-  members[i].kind = kind;
-  members[i].checked = true;
+  members[i].kind = kind; members[i].checked = true;
   const row = document.getElementById(`pr-${i}`);
   if (!row) return;
   row.classList.add('checked');
   row.querySelector('input[type=checkbox]').checked = true;
-  row.querySelectorAll('.kind-btn').forEach(b => b.classList.toggle('active', b.classList.contains('k' + kind)));
+  row.querySelectorAll('.kind-btn').forEach(b => b.classList.toggle('active', b.classList.contains('k'+kind)));
   updateSummary();
 }
 
 function addExtraPerson() {
   const name = document.getElementById('extraName').value.trim();
   if (!name) return;
-  members.push({ name, status: '追加', checked: true, kind: 1 });
+  members.push({name, status:'追加', checked:true, kind:1});
   document.getElementById('extraName').value = '';
-  renderMembers();
-  updateSummary();
+  renderMembers(); updateSummary();
 }
 
-// ── 集計 ──────────────────────────────────────────────────
 function updateSummary() {
   const checked = members.filter(m => m.checked);
-  const c1 = checked.filter(m => m.kind === 1).length;
-  const c2 = checked.filter(m => m.kind === 2).length;
-
+  const c1 = checked.filter(m => m.kind===1).length;
+  const c2 = checked.filter(m => m.kind===2).length;
   document.getElementById('count1').textContent = c1;
   document.getElementById('count2').textContent = c2;
-
-  const ins1 = c1 * 53 + c2 * 462;
-  const ins2 = Math.max(30 * (c1 + c2), 1500);
+  const ins1 = c1*53 + c2*462;
+  const ins2 = Math.max(30*(c1+c2), 1500);
   const ins3 = ins1 + ins2;
-
-  document.getElementById('ins1').textContent = ins1.toLocaleString() + ' 円';
-  document.getElementById('ins2').textContent = ins2.toLocaleString() + ' 円';
-  document.getElementById('ins3').textContent = ins3.toLocaleString() + ' 円';
-
+  document.getElementById('ins1').textContent = ins1.toLocaleString()+' 円';
+  document.getElementById('ins2').textContent = ins2.toLocaleString()+' 円';
+  document.getElementById('ins3').textContent = ins3.toLocaleString()+' 円';
   const tags = document.getElementById('ptags');
-  tags.innerHTML = checked.length === 0
-    ? '<span style="color:var(--muted);font-size:0.82rem;">参加者が選択されていません</span>'
+  tags.innerHTML = checked.length===0
+    ? '<span style="color:var(--muted);">参加者が選択されていません</span>'
     : checked.map(m => `<span class="ptag k${m.kind}">${m.name}（${m.kind===1?'１':'２'}種）</span>`).join('');
 }
 
-// ── 結果 ──────────────────────────────────────────────────
 function showResult() {
   const checked = members.filter(m => m.checked);
-  if (checked.length === 0) {
-    alert('参加者を選択してください。'); return;
-  }
-
-  const c1 = checked.filter(m => m.kind === 1).length;
-  const c2 = checked.filter(m => m.kind === 2).length;
-  const ins1 = c1 * 53 + c2 * 462;
-  const ins2 = Math.max(30 * (c1 + c2), 1500);
-  const ins3 = ins1 + ins2;
-
-  const today = new Date();
-  const r = today.getFullYear() - 2018;
-  const reportDate = `令和${r}年${today.getMonth()+1}月${today.getDate()}日`;
-  const location = document.getElementById('location').value || '';
-  const dateLabel = selectedDate ? selectedDate.label : '';
-  const names1 = checked.filter(m => m.kind===1).map(m => m.name).join('、');
-  const names2 = checked.filter(m => m.kind===2).map(m => m.name).join('、');
-
-  const text =
+  if (checked.length===0) { alert('参加者を選択してください。'); return; }
+  const c1=checked.filter(m=>m.kind===1).length;
+  const c2=checked.filter(m=>m.kind===2).length;
+  const ins1=c1*53+c2*462;
+  const ins2=Math.max(30*(c1+c2),1500);
+  const ins3=ins1+ins2;
+  const today=new Date();
+  const r=today.getFullYear()-2018;
+  const reportDate=`令和${r}年${today.getMonth()+1}月${today.getDate()}日`;
+  const location=document.getElementById('location').value||'';
+  const dateLabel=selectedDate?selectedDate.label:'';
+  const names1=checked.filter(m=>m.kind===1).map(m=>m.name).join('、');
+  const names2=checked.filter(m=>m.kind===2).map(m=>m.name).join('、');
+  const text=
 `【活動実施報告】
 報告日　　　：${reportDate}
 活動日　　　：${dateLabel}
 実施場所　　：安曇野市 ${location}
 ─────────────────────
 第１種（動力不使用）：${c1}名
-　${names1 || '（なし）'}
+　${names1||'（なし）'}
 第２種（動力使用）　：${c2}名
-　${names2 || '（なし）'}
+　${names2||'（なし）'}
 ─────────────────────
 ①傷害部分　　　 ：${ins1.toLocaleString()} 円
 ②賠償責任部分　 ：${ins2.toLocaleString()} 円
-③合計保険料　　 ：${ins3.toLocaleString()} 円
-─────────────────────
-転記先シート：${selectedDate ? dateLabel.match(/(\d+\/\d+)/)?.[1]?.replace('/','月').concat('日') || '' : ''}`;
-
+③合計保険料　　 ：${ins3.toLocaleString()} 円`;
   document.getElementById('resultData').textContent = text;
-  document.getElementById('sec-result').classList.remove('hidden');
-  document.getElementById('sec-result').scrollIntoView({ behavior: 'smooth' });
-}
-
-function copyResult() {
-  const text = document.getElementById('resultData').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    // コピーボタンだけ変更（2番目のボタン）
-    const btns = document.querySelectorAll('#sec-result .btn-copy');
-    const copyBtn = btns[btns.length - 1];
-    copyBtn.textContent = '✓ コピーしました！';
-    setTimeout(() => copyBtn.textContent = '📋 内容をコピー', 2000);
-  });
+  show('sec-result');
+  document.getElementById('sec-result').scrollIntoView({behavior:'smooth'});
 }
 
 function sendEmail() {
-  const text = document.getElementById('resultData').textContent;
-  const to = 'gorokazuo@gmail.com';
-  const subject = encodeURIComponent('【活動実施報告】' + (selectedDate ? selectedDate.label : ''));
-  const body = encodeURIComponent(text);
-  window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  const text=document.getElementById('resultData').textContent;
+  const dateLabel=selectedDate?selectedDate.label:'';
+  const subject=encodeURIComponent(`【活動実施報告】${dateLabel}`);
+  const body=encodeURIComponent(text);
+  window.location.href=`mailto:gorokazuo@gmail.com?subject=${subject}&body=${body}`;
+}
+
+function copyResult() {
+  const text=document.getElementById('resultData').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.querySelectorAll('.btn-action')[1];
+    btn.textContent='✓ コピーしました';
+    setTimeout(()=>btn.textContent='📋 内容をコピー',2000);
+  });
 }
 </script>
 </body>
