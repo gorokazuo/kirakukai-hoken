@@ -119,6 +119,10 @@
   <div id="memberList"></div>
   <div class="add-row">
     <input type="text" id="extraName" placeholder="予定外の参加者名を追加">
+    <select id="extraKind" style="background:var(--bg);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:1rem;padding:10px 8px;outline:none;flex-shrink:0;">
+      <option value="1">第１種</option>
+      <option value="2">第２種</option>
+    </select>
     <button class="btn-add" onclick="addExtraPerson()">＋</button>
   </div>
 </div>
@@ -183,7 +187,13 @@ window.addEventListener('DOMContentLoaded', () => {
     show('sec-error'); hide('sec-loading'); return;
   }
   try {
-    const payload = JSON.parse(decodeURIComponent(atob(d)));
+    const raw = JSON.parse(decodeURIComponent(atob(d)));
+    // 短縮形式 {l, m:[{n,s}]} と旧形式 {label, members} の両方に対応
+    const payload = {
+      label:   raw.l   || raw.label,
+      members: raw.m   ? raw.m.map(x=>({name:x.n, status:x.s}))
+                       : raw.members
+    };
     selectedDate = payload;
     members = payload.members.map(m => ({name:m.name, status:m.status, checked:false, kind:1}));
     document.getElementById('actDateLabel').textContent = payload.label;
@@ -247,7 +257,8 @@ function setKind(i, kind) {
 function addExtraPerson() {
   const name = document.getElementById('extraName').value.trim();
   if (!name) return;
-  members.push({name, status:'追加', checked:true, kind:1});
+  const kind = parseInt(document.getElementById('extraKind').value);
+  members.push({name, status:'追加', checked:true, kind});
   document.getElementById('extraName').value = '';
   renderMembers(); updateSummary();
 }
