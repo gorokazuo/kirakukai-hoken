@@ -174,8 +174,15 @@ function getParams() {
   const d = params.get('d');
   if (!d) return null;
   try {
-    const json = atob(d.replace(/-/g,'+').replace(/_/g,'/'));
-    return JSON.parse(json);
+    // Step1: Base64デコード
+    let step1 = atob(d.replace(/-/g,'+').replace(/_/g,'/'));
+    // Step2: URLデコード（%7B等が含まれていれば）
+    let step2 = step1;
+    if (step1.indexOf('%') !== -1) {
+      step2 = decodeURIComponent(step1);
+    }
+    // Step3: JSONパース
+    return JSON.parse(step2);
   } catch(e) {
     return null;
   }
